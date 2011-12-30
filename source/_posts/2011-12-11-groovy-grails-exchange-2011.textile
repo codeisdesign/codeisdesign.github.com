@@ -1,0 +1,16 @@
+---
+layout: post
+title: 'Groovy & Grails Exchange 2011'
+date: 2011-12-11
+wordpress-id: groovy-grails-exchange-2011
+comments: true
+---
+Although I could not be in the Groovy &amp; Grails Exchange, I have watched lot of speaks from the conference.
+
+Really enjoyed Guillaume's keynote about Groovy 1.8, Burt Beckwith talk about Spring Security Core plugin and Groovy running on Android (Discobot).
+
+I was glad to hear that Grails 2.0 FINAL will be released next week. Really good news, because it's gonna make my life easier on daily basis.
+
+If you missed the conference as I did, you can go the Skills Matter website and check all the great speaks from the conference.
+
+<a href="http://skillsmatter.com/event/groovy-grails/groovy-grails-exchange-2011" target="_blank">http://skillsmatter.com/event/groovy-grails/groovy-grails-exchange-2011</a>

@@ -1,0 +1,16 @@
+---
+layout: post
+title: 'GORM and performance'
+date: 2011-11-22
+wordpress-id: gorm-and-performance
+comments: true
+---
+Have not been really active with this blog (My first intention was only post the CAS tutorial), but I think I start writing about what I find interesting in the world of software. Promise!
+
+I just watched Burt's "<a href="http://www.infoq.com/presentations/GORM-Performance" rel="permalink">Advanced GORM - Performance, Customization and Monitoring</a>" -presentation. And also read the article "<a title="Permanent Link: Hibernate Bags in Grails 2.0" href="http://burtbeckwith.com/blog/?p=1029" rel="bookmark">Hibernate Bags in Grails 2.0</a>".
+
+So using maps in domain objects (hasMany) is bad, since there is no Hibernate Bags (not guaranteed to be unique or in order) support in GORM before Grails 2.0. New version of Grails adds the Bags support, but we have still problems.
+
+Now I understand lot more about how the GORM works "under the hood", so I recommend you to go through these articles.
+
+Hopefully these are corrected before the Grails 2.0 FINAL is released.

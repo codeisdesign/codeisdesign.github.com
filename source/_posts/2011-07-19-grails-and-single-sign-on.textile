@@ -1,0 +1,195 @@
+---
+layout: post
+title: 'Grails and single-sign on'
+date: 2011-7-19
+wordpress-id: grails-and-single-sign-on
+comments: true
+---
+I could not find step by step instructions how to set two simple Grails applications to use single-sign on, so this first blog post is going cover that.
+
+My case was this:
+<ul>
+	<li>When logged in to a secured application, how to see content on another secured application without login hell.</li>
+</ul>
+Obvious answer was to use single-sign on. For end user point of view it's just one login and you are good to go.
+
+Sound pretty nice, but how to accomplish this in Grails?
+
+To make our application secure Mr. <a href="http://burtbeckwith.com/" target="_blank">Burt Beckwith</a> has created a collection of Spring Security plugins.
+
+We are going to user Spring Security Core plugin and Spring Security CAS plugin.
+
+<strong>CAS</strong> stands for <strong>Central Authentication Service</strong>. It's a single-sign on protocol for the web.
+
+<strong>1. Setting up Tomcat for CAS server</strong>
+
+First you need some servlet a container. In this example we use Apache Tomcat (I used version 7).
+
+<a href="http://tomcat.apache.org/" target="_blank">Download Apache Tomcat</a>
+
+Unarchive Apache Tomcat to some directory in your computer.
+
+We must configure CAS to use SSL so we need to create Certificate Keystore:
+
+{% codeblock %}
+$JAVA_HOME/bin/keytool -genkey -alias cas -keyalg RSA
+{% endcodeblock %}
+{% codeblock %}
+keytool -genkey -alias cas -keyalg RSA
+Enter keystore password:
+Re-enter new password:
+What is your first and last name?
+  [Unknown]:  localhost
+What is the name of your organizational unit?
+  [Unknown]:  Test
+What is the name of your organization?
+  [Unknown]:  Test
+What is the name of your City or Locality?
+  [Unknown]:
+What is the name of your State or Province?
+  [Unknown]:
+What is the two-letter country code for this unit?
+  [Unknown]:
+Is CN=localhost, OU=Test, O=Test, L=Unknown, ST=Unknown, C=Unknown correct?
+  [no]:  yes
+
+Enter key password for &lt;cas&gt;
+	(RETURN if same as keystore password):
+{% endcodeblock %}
+
+Default password for keystore that Tomcat uses is "changeit". So we are going to use that. Command creates .keystore -file to your home directory.
+
+Now go tho the <strong>conf/ </strong>-folder of Tomcat and open the<strong> server.xml </strong>-file. We have to add SSL Connector:
+
+{% codeblock %}
+&lt;Connector
+port=&quot;8443&quot; maxThreads=&quot;200&quot;
+scheme=&quot;https&quot; secure=&quot;true&quot; SSLEnabled=&quot;true&quot;
+keystoreFile=&quot;${user.home}/.keystore&quot; keystorePass=&quot;changeit&quot;
+clientAuth=&quot;false&quot; sslProtocol=&quot;TLS&quot;/&gt;
+{% endcodeblock %}
+
+Now we have set up our Tomcat to use SSL we need to export the certificate and import it as a "trusted" certificate to our "cacerts" keystore in Java Runtime (JRE) <strong>lib/security</strong> -folder.
+
+{% codeblock %}
+$JAVA_HOME/bin/keytool -export -alias cas -file ~/cas.crt -keystore ~/.keystore
+{% endcodeblock %}
+{% codeblock %}
+$JAVA_HOME/bin/keytool -import -alias cas -file ~/cas.crt -keystore $JAVA_HOME/jre/lib/security/cacerts
+{% endcodeblock %}
+
+For Mac users "cacerts" can be found from <strong>/Library/Java/Home/lib/security/cacerts</strong>. (Note! You must use sudo to apply the command)
+
+{% codeblock %}
+Enter keystore password:
+Owner: CN=localhost, OU=Test, O=Test, L=Unknown, ST=Unknown, C=Unknown
+Issuer: CN=localhost, OU=Test, O=Test, L=Unknown, ST=Unknown, C=Unknown
+Serial number: 4e25a98a
+Valid from: Tue Jul 19 18:58:02 EEST 2011 until: Mon Oct 17 18:58:02 EEST 2011
+Certificate fingerprints:
+	 MD5:  E8:B7:11:26:87:81:77:18:78:E1:6F:81:5B:29:BF:6E
+	 SHA1: AE:8D:3A:16:29:B2:84:58:4D:DC:15:53:F7:F5:15:34:BB:E2:70:3A
+	 Signature algorithm name: SHA1withRSA
+	 Version: 3
+Trust this certificate? [no]:  yes
+Certificate was added to keystore
+{% endcodeblock %}
+
+That is all you have to modify from the Tomcat (<strong>NOTE: This is not a production set up!</strong>)
+
+<strong>2. Configure and Compile CAS server</strong>
+
+Now we need to download, configure and compile the CAS server (I used version 3.4.8).
+
+<a href="http://www.jasig.org/cas/download">Download CAS Server</a>
+
+Unarchive CAS Server to some directory in your computer.
+
+In this setup we are going to use text file as a user database for authentication. It's pretty handy for testing purposes. It's not recommended for production setup.
+
+Go to the<strong> cas-server-webapp/</strong> -folder in the CAS Server and open<strong> pom.xml</strong> -file. We need to add dependency to cas-server-support-generic -module.
+
+{% codeblock %}
+		&lt;dependency&gt;
+     		&lt;groupId&gt;${project.groupId}&lt;/groupId&gt;
+     		&lt;artifactId&gt;cas-server-support-generic&lt;/artifactId&gt;
+     		&lt;version&gt;${project.version}&lt;/version&gt;
+		&lt;/dependency&gt;
+{% endcodeblock %}
+
+Go to <strong>cas-server-webapp/src/main/webapp/WEB-INF/</strong> -folder in the CAS Server and open <strong>deployerConfigContext.xml</strong> -file.
+
+{% codeblock %}
+&lt;bean class=&quot;org.jasig.cas.adaptors.generic.FileAuthenticationHandler&quot; p:fileName=&quot;file:/path/to/file/authentication_database.txt&quot; /&gt;
+{% endcodeblock %}
+
+Replace SimpleTestUsernamePasswordAuthenticationHandler with FileAuthenticationHandler in the section "auhenticationHandlers".
+
+Create <strong>authentication_database.txt</strong> -file  that holds username/password pairs. Change the path in FileAuthenticationHandler to point to your file.
+
+{% codeblock %}
+codeisdesign::password
+admin::password
+{% endcodeblock %}
+
+Go to the <strong>cas-server-webapp/</strong> -folder in the CAS Server and create war -package from the webapp. You need to run:
+
+{% codeblock %}mvn package{% endcodeblock %}
+
+Now you have <strong>cas.war</strong> in your <strong>cas.server-webapp/target/</strong> -folder. Copy <strong>cas.war</strong> -file to your Tomcat installations<strong> webapps/</strong> -folder and you have CAS Server installed.
+
+<strong>3. Configuring your Grails applications</strong>
+
+In this example I have two Grails applications "sso-example-1" and "sso-example-2", which both have single controller and they are secured with Spring Security.
+
+Here's the scenario:
+<ol>
+	<li>User goes to "sso-example-1" application -&gt; http://localhost:8081/sso-example-1</li>
+	<li>User gets redirected to the CAS Server for authentication.</li>
+	<li>After authentication user is redirected back to the "sso-example-1"</li>
+	<li>User goes to "sso-example-2" application  -&gt; http://localhost:8082/sso-example-2</li>
+	<li>User is already authenticated and content is shown.</li>
+</ol>
+You must configure CAS plugin in your applications <strong>Config.groovy</strong> -file.<strong>
+</strong>
+
+Here's configuration for "sso-example-1" and "sso-example-2"
+
+{% codeblock %}
+grails.plugins.springsecurity.cas.loginUri = '/login'
+grails.plugins.springsecurity.cas.serviceUrl = 'http://localhost:8081/sso-example-1/j_spring_cas_security_check'
+grails.plugins.springsecurity.cas.serverUrlPrefix = 'https://localhost:8443/cas'
+grails.plugins.springsecurity.cas.proxyCallbackUrl = 'http://localhost:8081/sso-example-1/secure/receptor'
+grails.plugins.springsecurity.cas.proxyReceptorUrl = '/secure/receptor'
+grails.plugins.springsecurity.logout.afterLogoutUrl ='https://localhost:8443/cas/logout?url=http://localhost:8081/sso-example-1/'
+{% endcodeblock %}
+
+&nbsp;
+
+{% codeblock %}
+grails.plugins.springsecurity.cas.loginUri = '/login'
+grails.plugins.springsecurity.cas.serviceUrl = 'http://localhost:8082/sso-example-2/j_spring_cas_security_check'
+grails.plugins.springsecurity.cas.serverUrlPrefix = 'https://localhost:8443/cas'
+grails.plugins.springsecurity.cas.proxyCallbackUrl = 'http://localhost:8082/sso-example-2/secure/receptor'
+grails.plugins.springsecurity.cas.proxyReceptorUrl = '/secure/receptor'
+grails.plugins.springsecurity.logout.afterLogoutUrl ='https://localhost:8443/cas/logout?url=http://localhost:8082/sso-example-2/'
+{% endcodeblock %}
+
+More about plugin configuration you can find from the <a href="http://burtbeckwith.github.com/grails-spring-security-cas/" target="_blank">plugin homepage</a>.
+
+We also need same users to exist in the application which were in the <strong>authentication_database.txt. </strong>That is done in Bootstrap.groovy.
+{% codeblock %}<span class="Apple-style-span" style="font-family:Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;font-size:13px;line-height:19px;white-space:normal;">Now we have configured applications and we are ready to test! Start your Tomcat instance (CAS Server), "sso-example-1" and "sso-example-2"<strong>.</strong></span>{% endcodeblock %}
+CAS Server is running in 8080 and 8443 ports so you need to run "sso-example-1" on port 8081 and "sso-example-2" on port 8082 as configured in Config.groovy. To do this, you can define port in the run-app -command:
+
+{% codeblock %}
+grails -Dserver.port=8081 run-app
+{% endcodeblock %}
+
+Just go to<a href="http://localhost:8081/sso-example-1" target="_blank"> http://localhost:8081/sso-example-1</a> and authenticate. Then go to  <a href="http://localhost:8082/sso-example-2" target="_blank">http://localhost:8082/sso-example-2</a> and that's it. No more another login.
+
+You can find source codes for both applications from Github.com
+
+<a href="https://github.com/smakela/sso-example-1" target="_blank">Get SSO Example 1</a>
+<a href="https://github.com/smakela/sso-example-2" target="_blank">Get SSO Example 2</a>
+
+If you have any questions, please leave a comment!
