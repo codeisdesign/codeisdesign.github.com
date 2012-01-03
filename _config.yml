@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://codeisdesign.github.com
+url: http://blog.samimakela.fi
 title: codeisdesign
 subtitle: tales from the land of software development
 author: Sami Mäkelä
@@ -93,7 +93,7 @@ disqus_short_name: codeisdesign
 disqus_show_comment_count: false
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-28082076-1
 
 # Facebook Like
 facebook_like: false
