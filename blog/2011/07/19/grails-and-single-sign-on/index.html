@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>codeisdesign</title>
+  <title>Grails and single-sign on - codeisdesign</title>
   <meta name="author" content="Sami Mäkelä">
 
   
-  <meta name="description" content="I released today spring security RADIUS plugin. Motivation behind this plugin was to enable one-time passwords for Grails applications.
-Static &hellip;">
+  <meta name="description" content="Introduction
+I could not find step by step instructions how to set two simple Grails applications to use single-sign on, so this first blog post is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ Static &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://codeisdesign.github.com">
+  <link rel="canonical" href="http://codeisdesign.github.com/blog/2011/07/19/grails-and-single-sign-on">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -75,133 +75,12 @@ Static &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/12/14/grails-spring-security-radius-plugin-and-mobile-one-time-password/">Grails Spring Security RADIUS Plugin and Mobile One-Time Password</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-14T00:00:00+02:00" pubdate data-updated="true">Dec 14<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I released today <a href="http://grails.org/plugin/spring-security-radius">spring security <span class="caps">RADIUS</span> plugin</a>. Motivation behind this plugin was to enable one-time passwords for Grails applications.</p>
-<p>Static passwords are not very safe way to authenticate. If intruder gets password, he can simply login to the system. One-time password helps to overcome this shortcoming. If intruder gets the password, it is no longer valid.</p>
-<p>I tried to find open source <span class="caps">OTP</span> project and found <a href="http://motp.sourceforge.net/"><span class="caps">MOTP</span></a> project. Project started back in 2003 and it offers authentication server which is <span class="caps">RADIUS</span> server that supports authentication with <span class="caps">OTP</span> tokens and client that is used to generate OTPs for the authentication.</p>
-<p>In development I used <a href="http://motp-as.network-cube.de/">Mobile-<span class="caps">OTP</span> Authentication Server</a> which is out-of-the-box authentication server. It&#8217;s really simple to install to your virtualization environment such as <a>Virtual Box</a>.</p>
-<p>You can find tutorial from <a href="http://smakela.github.com/grails-spring-security-radius/">plugin documentation</a> how to secure your Grails application with one-time password.</p>
-<p>Enjoy your secure Grails application!</p></div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/11/groovy-grails-exchange-2011/">Groovy & Grails Exchange 2011</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-11T00:00:00+02:00" pubdate data-updated="true">Dec 11<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Although I could not be in the Groovy &amp; Grails Exchange, I have watched lot of speaks from the conference.</p>
-<p>Really enjoyed Guillaume&#8217;s keynote about Groovy 1.8, Burt Beckwith talk about Spring Security Core plugin and Groovy running on Android (Discobot).</p>
-<p>I was glad to hear that Grails 2.0 <span class="caps">FINAL</span> will be released next week. Really good news, because it&#8217;s gonna make my life easier on daily basis.</p>
-<p>If you missed the conference as I did, you can go the Skills Matter website and check all the great speaks from the conference.</p>
-<p><a href="http://skillsmatter.com/event/groovy-grails/groovy-grails-exchange-2011" target="_blank">http://skillsmatter.com/event/groovy-grails/groovy-grails-exchange-2011</a></p></div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/11/22/gorm-and-performance/">GORM and Performance</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-22T00:00:00+02:00" pubdate data-updated="true">Nov 22<span>nd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Have not been really active with this blog (my first intention was only post the <span class="caps">CAS</span> tutorial), but I think I start writing about what I find interesting in the world of software. Promise!</p>
-<p>I just watched Burt&#8217;s <a href="http://www.infoq.com/presentations/GORM-Performance">Advanced <span class="caps">GORM</span> &#8211; Performance, Customization and Monitoring</a> -presentation. And also read the article <a href="http://burtbeckwith.com/blog/?p=1029">Hibernate Bags in Grails 2.0</a>.</p>
-<p>So using maps in domain objects (hasMany) is bad, since there is no Hibernate Bags (not guaranteed to be unique or in order) support in <span class="caps">GORM</span> before Grails 2.0. New version of Grails adds the Bags support, but we have still problems.</p>
-<p>Now I understand lot more about how the <span class="caps">GORM</span> works &#8220;under the hood&#8221;, so I recommend you to go through these articles.</p>
-<p>Hopefully these are corrected before the Grails 2.0 <span class="caps">FINAL</span> is released.</p></div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/07/19/grails-and-single-sign-on/">Grails and Single-sign On</a></h1>
+      <h1 class="entry-title">Grails and Single-sign On</h1>
     
     
       <p class="meta">
@@ -224,7 +103,7 @@ Static &hellip;">
   </header>
 
 
-  <div class="entry-content"><h2>Introduction</h2>
+<div class="entry-content"><h2>Introduction</h2>
 <p style="text-align:left;">I could not find step by step instructions how to set two simple Grails applications to use single-sign on, so this first blog post is going cover that.</p>
 <p>My case was this:</p>
 <blockquote>
@@ -403,18 +282,59 @@ Static &hellip;">
 <p><a href="https://github.com/smakela/sso-example-1" target="_blank">Get <span class="caps">SSO</span> Example 1</a><br />
 <a href="https://github.com/smakela/sso-example-2" target="_blank">Get <span class="caps">SSO</span> Example 2</a></p>
 <p>If you have any questions, please leave a comment!</p></div>
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Sami Mäkelä</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2011-07-19T00:00:00+03:00" pubdate data-updated="true">Jul 19<span>th</span>, 2011</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
   
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://codeisdesign.github.com/blog/2011/07/19/grails-and-single-sign-on/" data-via="smakela_" data-counturl="http://codeisdesign.github.com/blog/2011/07/19/grails-and-single-sign-on/" >Tweet</a>
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/11/22/gorm-and-performance/" title="next Post: GORM and performance">GORM and performance &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -444,7 +364,7 @@ Static &hellip;">
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -464,6 +384,7 @@ Static &hellip;">
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -478,7 +399,10 @@ Static &hellip;">
       var disqus_shortname = 'codeisdesign';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://codeisdesign.github.com/blog/2011/07/19/grails-and-single-sign-on/';
+        var disqus_url = 'http://codeisdesign.github.com/blog/2011/07/19/grails-and-single-sign-on/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

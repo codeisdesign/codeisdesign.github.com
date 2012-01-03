@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
+    <url>
+        <loc>http://codeisdesign.github.com/blog/2011/07/19/grails-and-single-sign-on/</loc>
+        <lastmod>2012-01-04T00:48:10+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://codeisdesign.github.com/blog/2011/11/22/gorm-and-performance/</loc>
+        <lastmod>2012-01-04T00:48:10+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://codeisdesign.github.com/blog/2011/12/11/groovy-grails-exchange-2011/</loc>
+        <lastmod>2012-01-04T00:48:10+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://codeisdesign.github.com/blog/2011/12/14/grails-spring-security-radius-plugin-and-mobile-one-time-password/
+        </loc>
+        <lastmod>2012-01-04T00:48:10+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://codeisdesign.github.com/blog/archives/</loc>
+        <lastmod>2012-01-04T00:48:10+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://codeisdesign.github.com/</loc>
+        <lastmod>2012-01-04T00:48:10+02:00</lastmod>
+    </url>
+</urlset>
