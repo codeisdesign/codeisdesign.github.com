@@ -4,7 +4,7 @@
   <title><![CDATA[codeisdesign]]></title>
   <link href="http://codeisdesign.github.com/atom.xml" rel="self"/>
   <link href="http://codeisdesign.github.com/"/>
-  <updated>2012-01-10T08:02:37+02:00</updated>
+  <updated>2012-01-18T08:28:09+02:00</updated>
   <id>http://codeisdesign.github.com/</id>
   <author>
     <name><![CDATA[Sami Mäkelä]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Grails tips &amp; tricks: Default package for artifacts]]></title>
+    <link href="http://codeisdesign.github.com/blog/2012/01/18/grails-tips-and-tricks-default-package-for-artifacts/"/>
+    <updated>2012-01-18T07:44:00+02:00</updated>
+    <id>http://codeisdesign.github.com/blog/2012/01/18/grails-tips-and-tricks-default-package-for-artifacts</id>
+    <content type="html"><![CDATA[<p>If you want a default package for your domain classes, controllers or any other artifacts,
+you can simply use <code>grails.project.groupId</code> in your <strong>Config.groovy</strong> to achieve this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grails.project.groupId = 'fi.samimakela.application'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you use for example <code>create-domain-class</code> -command now, your domain class will be in <code>fi.samimakela.application</code> -package.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grails create-domain-class Foo</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But it&#8217;s not good to build a huge software having everything in the same package.
+So you might want to do <a href="http://www.javapractices.com/topic/TopicAction.do?Id=205">packaging by feature</a>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grails create-domain-class ~.greatfeature.Bar</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you domain class will be in <code>fi.samimakela.application.greatfeature</code> -package. Just use tilde before your subpackage.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Grails Spring Security RADIUS Plugin and Mobile One-Time Password]]></title>

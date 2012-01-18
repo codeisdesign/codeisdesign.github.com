@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Groovy & Grails Exchange 2011 - codeisdesign</title>
+  <title>Grails tips &amp; tricks: Default package for artifacts - codeisdesign</title>
   <meta name="author" content="Sami Mäkelä">
 
   
-  <meta name="description" content="Although I could not be in the Groovy &amp; Grails Exchange, I have watched lot of speaks from the conference.
-Really enjoyed Guillaume&#8217;s &hellip;">
+  <meta name="description" content="If you want a default package for your domain classes, controllers or any other artifacts,
+you can simply use grails.project.groupId in your Config. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ Really enjoyed Guillaume&#8217;s &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://codeisdesign.github.com/blog/2011/12/11/groovy-grails-exchange-2011">
+  <link rel="canonical" href="http://codeisdesign.github.com/blog/2012/01/18/grails-tips-and-tricks-default-package-for-artifacts">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +80,7 @@ Really enjoyed Guillaume&#8217;s &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Groovy & Grails Exchange 2011</h1>
+      <h1 class="entry-title">Grails Tips &amp; Tricks: Default Package for Artifacts</h1>
     
     
       <p class="meta">
@@ -96,18 +96,35 @@ Really enjoyed Guillaume&#8217;s &hellip;">
   
 
 
-<time datetime="2011-12-11T00:00:00+02:00" pubdate data-updated="true">Dec 11<span>th</span>, 2011</time>
+<time datetime="2012-01-18T07:44:00+02:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Although I could not be in the Groovy &amp; Grails Exchange, I have watched lot of speaks from the conference.</p>
-<p>Really enjoyed Guillaume&#8217;s keynote about Groovy 1.8, Burt Beckwith talk about Spring Security Core plugin and Groovy running on Android (Discobot).</p>
-<p>I was glad to hear that Grails 2.0 <span class="caps">FINAL</span> will be released next week. Really good news, because it&#8217;s gonna make my life easier on daily basis.</p>
-<p>If you missed the conference as I did, you can go the Skills Matter website and check all the great speaks from the conference.</p>
-<p><a href="http://skillsmatter.com/event/groovy-grails/groovy-grails-exchange-2011" target="_blank">http://skillsmatter.com/event/groovy-grails/groovy-grails-exchange-2011</a></p></div>
+<div class="entry-content"><p>If you want a default package for your domain classes, controllers or any other artifacts,
+you can simply use <code>grails.project.groupId</code> in your <strong>Config.groovy</strong> to achieve this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grails.project.groupId = 'fi.samimakela.application'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you use for example <code>create-domain-class</code> -command now, your domain class will be in <code>fi.samimakela.application</code> -package.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grails create-domain-class Foo</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But it&#8217;s not good to build a huge software having everything in the same package.
+So you might want to do <a href="http://www.javapractices.com/topic/TopicAction.do?Id=205">packaging by feature</a>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>grails create-domain-class ~.greatfeature.Bar</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you domain class will be in <code>fi.samimakela.application.greatfeature</code> -package. Just use tilde before your subpackage.</p>
+</div>
 
 
   <footer>
@@ -129,7 +146,7 @@ Really enjoyed Guillaume&#8217;s &hellip;">
   
 
 
-<time datetime="2011-12-11T00:00:00+02:00" pubdate data-updated="true">Dec 11<span>th</span>, 2011</time>
+<time datetime="2012-01-18T07:44:00+02:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
       
 
 
@@ -137,7 +154,7 @@ Really enjoyed Guillaume&#8217;s &hellip;">
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://codeisdesign.github.com/blog/2011/12/11/groovy-grails-exchange-2011/" data-via="smakela_" data-counturl="http://codeisdesign.github.com/blog/2011/12/11/groovy-grails-exchange-2011/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://codeisdesign.github.com/blog/2012/01/18/grails-tips-and-tricks-default-package-for-artifacts/" data-via="smakela_" data-counturl="http://codeisdesign.github.com/blog/2012/01/18/grails-tips-and-tricks-default-package-for-artifacts/" >Tweet</a>
   
   
   
@@ -146,10 +163,8 @@ Really enjoyed Guillaume&#8217;s &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/11/22/gorm-and-performance/" title="Previous Post: GORM and performance">&laquo; GORM and performance</a>
+        <a class="basic-alignment left" href="/blog/2011/12/14/grails-spring-security-radius-plugin-and-mobile-one-time-password/" title="Previous Post: Grails Spring Security RADIUS Plugin and Mobile One-Time Password">&laquo; Grails Spring Security RADIUS Plugin and Mobile One-Time Password</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/12/14/grails-spring-security-radius-plugin-and-mobile-one-time-password/" title="next Post: Grails Spring Security RADIUS Plugin and Mobile One-Time Password">Grails Spring Security RADIUS Plugin and Mobile One-Time Password &raquo;</a>
       
     </p>
   </footer>
@@ -232,8 +247,8 @@ Really enjoyed Guillaume&#8217;s &hellip;">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://codeisdesign.github.com/blog/2011/12/11/groovy-grails-exchange-2011/';
-        var disqus_url = 'http://codeisdesign.github.com/blog/2011/12/11/groovy-grails-exchange-2011/';
+        var disqus_identifier = 'http://codeisdesign.github.com/blog/2012/01/18/grails-tips-and-tricks-default-package-for-artifacts/';
+        var disqus_url = 'http://codeisdesign.github.com/blog/2012/01/18/grails-tips-and-tricks-default-package-for-artifacts/';
         var disqus_script = 'embed.js';
       
     (function () {
